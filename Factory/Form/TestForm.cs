@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Factory.Autos;
 using Factory.Factories;
+using System.Reflection;
 
 namespace FactoryForm
 {
@@ -21,11 +22,20 @@ namespace FactoryForm
 
         private void btnFactory_Click(object sender, EventArgs e)
         {
-            //Hard code to BMW for now
-            IAutoFactory autoFactory = new BMWFactory();
+            //IAutoFactory autoFactory = new BMWFactory();
+            IAutoFactory autoFactory = LoadAutoFactory(txtCarType.Text);
             IAuto car = autoFactory.CreateAutomobile();
             car.TurnOn();
             car.TurnOff();
         }
+
+        IAutoFactory LoadAutoFactory(string autoFactoryName)
+        {
+            //TODO: Get from factory assembly
+            //return Assembly.GetAssembly(typeof(IAutoFactory)).CreateInstance(autoFactoryName) as IAutoFactory;
+
+            //Hard code to BMW for now
+            return new BMWFactory();
+        }    
     }
 }
